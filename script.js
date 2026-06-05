@@ -160,15 +160,20 @@ document.getElementById('sendButton').addEventListener('click', (e) => {
     
     // Переносим в Telegram через 2 секунды
     setTimeout(() => {
-        window.location.href = telegramUrl;
+        // На мобильных браузерах работает лучше через простую ссылку
+        const link = document.createElement('a');
+        link.href = telegramUrl;
+        link.click();
         
         // Закрываем модальное окно
-        modal.classList.remove('active');
-        
-        // Очищаем корзину
-        cart = [];
-        saveCartToStorage();
-        updateCartDisplay();
+        setTimeout(() => {
+            modal.classList.remove('active');
+            
+            // Очищаем корзину
+            cart = [];
+            saveCartToStorage();
+            updateCartDisplay();
+        }, 500);
     }, 2000);
 });
 
