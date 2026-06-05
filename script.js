@@ -152,29 +152,26 @@ document.getElementById('sendButton').addEventListener('click', (e) => {
     e.preventDefault();
 
     const orderText = generateOrderText();
-    const telegramUrl = `https://t.me/wntkkk?text=${encodeURIComponent(orderText)}`;
     
-    // Показываем модальное окно
+    // Копируем в буфер обмена
+    navigator.clipboard.writeText(orderText).then(() => {
+        // Показываем модальное окно с инструкцией
+        const modal = document.getElementById('orderModal');
+        modal.classList.add('active');
+    }).catch(() => {
+        alert('Не удалось скопировать. Попробуйте ещё раз.');
+    });
+});
+
+// Закрытие модального окна
+document.getElementById('closeModal').addEventListener('click', () => {
     const modal = document.getElementById('orderModal');
-    modal.classList.add('active');
+    modal.classList.remove('active');
     
-    // Переносим в Telegram через 2 секунды
-    setTimeout(() => {
-        // На мобильных браузерах работает лучше через простую ссылку
-        const link = document.createElement('a');
-        link.href = telegramUrl;
-        link.click();
-        
-        // Закрываем модальное окно
-        setTimeout(() => {
-            modal.classList.remove('active');
-            
-            // Очищаем корзину
-            cart = [];
-            saveCartToStorage();
-            updateCartDisplay();
-        }, 500);
-    }, 2000);
+    // Очищаем корзину
+    cart = [];
+    saveCartToStorage();
+    updateCartDisplay();
 });
 
 function generateOrderText() {
