@@ -64,15 +64,16 @@ function removeFromCart(timestamp) {
 // Обновление отображения корзины
 function updateCartDisplay() {
     const cartItemsContainer = document.getElementById('cartItems');
-    const sendButton = document.getElementById('sendButton');
+    const sendLink = document.getElementById('sendButton');
 
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<p class="empty-cart">Пока пусто...</p>';
-        sendButton.disabled = true;
+        sendLink.classList.add('disabled');
+        sendLink.href = '#';
         return;
     }
 
-    sendButton.disabled = false;
+    sendLink.classList.remove('disabled');
 
     const groupedCart = {};
     cart.forEach(item => {
@@ -142,11 +143,16 @@ function createFallingHearts(event) {
 }
 
 // Отправка заказа в Telegram
-document.getElementById('sendButton').addEventListener('click', () => {
-    if (cart.length === 0) return;
+document.getElementById('sendButton').addEventListener('click', (e) => {
+    if (cart.length === 0) {
+        e.preventDefault();
+        return;
+    }
+
+    e.preventDefault();
 
     const orderText = generateOrderText();
-    const telegramUrl = `https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(orderText)}`;
+    const telegramUrl = `https://t.me/wntkkk?text=${encodeURIComponent(orderText)}`;
     
     // Показываем модальное окно
     const modal = document.getElementById('orderModal');
@@ -154,7 +160,7 @@ document.getElementById('sendButton').addEventListener('click', () => {
     
     // Переносим в Telegram через 2 секунды
     setTimeout(() => {
-        window.open(telegramUrl, '_blank');
+        window.location.href = telegramUrl;
         
         // Закрываем модальное окно
         modal.classList.remove('active');

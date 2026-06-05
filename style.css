@@ -226,6 +226,16 @@ main.menu {
     cursor: not-allowed;
 }
 
+.send-button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.send-button-link {
+    display: block !important;
+}
+
 /* Hearts Animation */
 .hearts-container {
     position: fixed;
