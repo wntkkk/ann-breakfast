@@ -195,7 +195,7 @@ function generateOrderText() {
         text += `• ${name} x${data.count} — ${formatPrice(totalItemPrice)}\n`;
     });
 
-    text += `\n💕 Всего: ${formatPrice(totalPrice)}\n\n💕 С любовью, твоя Ann's breakfast`;
+    text += `\n💕 Всего: ${formatPrice(totalPrice)}\n\n💕 Постоплата`;
     
     return text;
 }
